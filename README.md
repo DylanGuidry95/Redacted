@@ -20,3 +20,8 @@ The repository will be available on 10/23/2018 8:00 am.
 
 notes:
 episodic game series
+TellTale game jam
+Create and pitch prototype to finish out final chapter of episodic game.
+Theme “Conclusion”
+Demonstrate an “exchange”
+Based on independent comic property with varied sci fi fantasy setting - Saga (optional - only if the students need more details)
