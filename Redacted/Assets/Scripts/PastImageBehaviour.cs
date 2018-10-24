@@ -8,7 +8,9 @@ public class PastImageBehaviour : MonoBehaviour
     public PastImageScriptable ImageRef;
     public GameObject Target;
     public GameObject ProjectilePrefab;
+    public ParticleSystem AttackingParticle;
     public float AttackDelay;
+    public float AttackPrep;
 
     private void Start()
     {
@@ -35,10 +37,11 @@ public class PastImageBehaviour : MonoBehaviour
 
     IEnumerator Attack()
     {
+        AttackingParticle.Play();
+        yield return new WaitForSeconds(AttackPrep);
         var projectile = Instantiate(ProjectilePrefab, transform.position +
             new Vector3(0, transform.localScale.x, 0), Quaternion.identity);
         projectile.GetComponent<Rigidbody>().useGravity = false;
-        yield return new WaitForSeconds(0.5f);
         projectile.GetComponent<Rigidbody>().useGravity = true;
         Vector3 dirToTarget = Target.transform.position - transform.position;
         projectile.GetComponent<Rigidbody>().AddForce(dirToTarget *
