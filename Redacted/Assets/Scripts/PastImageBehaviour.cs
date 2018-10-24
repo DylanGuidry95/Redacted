@@ -18,16 +18,17 @@ public class PastImageBehaviour : MonoBehaviour
     }
 
     float attackTimer = 0;
+    bool isAttacking = false;
     private void Update()
     {
         attackTimer += Time.deltaTime;
-        if (attackTimer >= AttackDelay)
+        if (attackTimer >= AttackDelay && !isAttacking)
         {
+            isAttacking = true;
             GetComponent<NavMeshAgent>().SetDestination(transform.position);
             transform.LookAt(new Vector3(Target.transform.position.x,
                 transform.position.y, Target.transform.position.z));
             StartCoroutine("Attack");
-            attackTimer = 0;
         }
         else
         {
@@ -40,12 +41,12 @@ public class PastImageBehaviour : MonoBehaviour
         AttackingParticle.Play();
         yield return new WaitForSeconds(AttackPrep);
         var projectile = Instantiate(ProjectilePrefab, transform.position +
-            new Vector3(0, transform.localScale.x, 0), Quaternion.identity);
-        projectile.GetComponent<Rigidbody>().useGravity = false;
-        projectile.GetComponent<Rigidbody>().useGravity = true;
+            new Vector3(0, transform.localScale.x, 0), Quaternion.identity);        
         Vector3 dirToTarget = Target.transform.position - transform.position;
         projectile.GetComponent<Rigidbody>().AddForce(dirToTarget *
             Random.Range(0.25f, 2.0f), ForceMode.Impulse);
+        attackTimer = 0;
+        isAttacking = false;
     }
 
     private void OnTriggerEnter(Collider other)

@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    public GameObject ExplosionParticle;    
+    public GameObject ExplosionParticle;
+    public float PushBackForce;
 
     private void OnCollisionEnter(Collision collision)
     {        
@@ -17,7 +18,9 @@ public class EnemyAttack : MonoBehaviour
         StartCoroutine("DestroyDelay");
         if(collision.gameObject.tag == "Player")
         {
-            Debug.Log("Player Hit");
+            collision.gameObject.GetComponent<PlayerBehaviour>().TakeDamage();
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward
+                * PushBackForce);
         }
     }
     
