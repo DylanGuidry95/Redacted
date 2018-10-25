@@ -33,7 +33,7 @@ public class PlayerTowerBehaviour : MonoBehaviour
     }
 
     [ContextMenu("FIRE")]
-    void Fire()
+    public void Fire()
     {
         StartCoroutine("LaserDraw");
     }
