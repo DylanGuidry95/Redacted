@@ -28,16 +28,24 @@ public class PastImageBehaviour : MonoBehaviour
             GetComponent<NavMeshAgent>().SetDestination(transform.position);
             transform.LookAt(new Vector3(Target.transform.position.x,
                 transform.position.y, Target.transform.position.z));
-            StartCoroutine("Attack");
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Target.transform.position - transform.position, out hit, Mathf.Infinity))
+            {
+                Debug.DrawLine(transform.position, hit.point);
+                if (hit.collider.tag == "Player")
+                    StartCoroutine("Attack");
+                else
+                    attackTimer = 0;
+            }            
         }
-        else
+        else if(!isAttacking)
         {
             GetComponent<NavMeshAgent>().SetDestination(Target.transform.position);
         }
     }
 
     IEnumerator Attack()
-    {
+    { 
         AttackingParticle.Play();
         yield return new WaitForSeconds(AttackPrep);
         var projectile = Instantiate(ProjectilePrefab, transform.position +
