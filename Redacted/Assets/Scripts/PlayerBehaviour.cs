@@ -7,9 +7,12 @@ public class PlayerBehaviour : MonoBehaviour
     public PlayerScriptable PlayerRef;
     public ParticleSystem DeathParticle;
 
+    public GameObject UI;
+
     private void Awake()
     {
         PlayerRef.SetUp();
+        UI.SetActive(false);
     }
 
     bool DirtyDeath = true;
@@ -26,6 +29,8 @@ public class PlayerBehaviour : MonoBehaviour
             GetComponent<MeshRenderer>().material.color = new Color(color.r, color.g,
                 color.b, color.a -= Time.deltaTime);
         }
+        if(PlayerRef.IsDead())
+            UI.SetActive(true);
     }
 
     public void TakeDamage()
